@@ -1,4 +1,7 @@
-# SpinningObjThrow.blend.py
-This Blender Python script animates objects like daggers, cleavers, or tomahawks in a gravity-influenced spinning throw. Key parameters like rotation speed, spin count, and velocity are customizable for various animation needs.<br>
-![cleaverThrow](https://github.com/Lemon2311/GravityDrivenSpinningObjectThrow.blend.py/assets/63803133/348b6a8a-066b-4751-acb7-acdf1e26f1b2) <br>
-Thx [@GoatedPika](https://github.com/GoatedPika) for the cleaver 3d model!
+# Python learning journey #
+These are exercises I complete in my journey of learning python, that can be completed by others to get accomodated to python.
+
+**1.) Knife_throw**<br>
+A blender animation animated via a python script to animate the trowing of a gravity influenced object.<br>
+**2.) Simple_Chatroom**<br>
+A simple chatroom built with [tornado](https://pypi.org/project/tornado/) websockets.<br>
