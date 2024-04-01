@@ -1,5 +1,5 @@
-# Python learning journey #
-These are exercises I complete in my journey of learning python, that can be completed by others to get accomodated to python.
+# Cool Programming Exercises #
+Self-explicit, these are cool programming exercises.
 
 **1.) Knife_Throw**<br>
 A blender animation animated via a python script to animate the trowing of a gravity influenced object.<br>
