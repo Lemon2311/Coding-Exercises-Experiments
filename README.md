@@ -1,5 +1,5 @@
 # Cool Programming Exercises #
-Self-explicit, these are cool programming exercises.
+Self-explicit, these are cool programming exercises I complete.
 
 **1.) Knife_Throw**<br>
 A blender animation animated via a python script to animate the trowing of a gravity influenced object.<br>
