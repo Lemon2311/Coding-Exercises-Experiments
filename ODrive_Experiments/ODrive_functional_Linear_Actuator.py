@@ -25,13 +25,13 @@ def bounds_detection_routine(odrive):
 
         print(f"pos:{odrive.axis0.pos_estimate};")
 
-        if('bound_right' not in globals() and check_position_delta(0.1, 1)):
+        if('bound_right' not in globals() and check_position_delta(odrive, 0.1, 1)):
             global bound_right
             odrive.axis0.controller.input_vel = 0
             bound_right = odrive.axis0.pos_estimate
             odrive.axis0.controller.input_vel = -1
 
-        if('bound_right' in globals() and check_position_delta(0.1, 1)):
+        if('bound_right' in globals() and check_position_delta(odrive, 0.1, 1)):
             global bound_left
             odrive.axis0.controller.input_vel = 0
             bound_left = odrive.axis0.pos_estimate
