@@ -15,6 +15,8 @@ def check_position_delta(odrive, position_delta_margin, delta_time):
     time.sleep(delta_time)
     return abs(odrive.axis0.pos_estimate - initial_position) < position_delta_margin
 
+bounds = {}
+
 def bounds_detection_routine(odrive):
     
     bound_left = None
@@ -35,7 +37,8 @@ def bounds_detection_routine(odrive):
             odrive.axis0.controller.input_vel = 0
             bound_left = odrive.axis0.pos_estimate
             print(f"bound_left: {bound_left}; bound_right: {bound_right}")
-            return odrive, bound_left, bound_right
+            bounds[odrive.serial_number] = (bound_left, bound_right)
+            return odrive
 
 def setup_position_control(odrive):
     odrive.axis0.controller.config.control_mode = ControlMode.POSITION_CONTROL
@@ -48,18 +51,25 @@ def sleep_decorator(func):
     return wrapper
 
 @sleep_decorator
-def move_in_procents(odrive, procent_from_start, bound_left, bound_right):
-    odrive.axis0.controller.input_pos = bound_left + (bound_right - bound_left) * procent_from_start / 100
-
-odrives = [odrive.find_any()]
+def move_in_procents(odrive, procent_from_start, position_delta_margin=0.1, sleep_time_before_callback=0, callback=None):
+    bound_left, bound_right = bounds[odrive.serial_number]
+    commanded_position = bound_left + (bound_right - bound_left) * procent_from_start / 100
+    odrive.axis0.controller.input_pos = commanded_position
+    
+    while True:
+        current_position = odrive.axis0.pos_estimate
+        if abs(current_position - commanded_position) < position_delta_margin:
+            time.sleep(sleep_time_before_callback)
+            print(commanded_position)
+            if callback is not None:
+                callback()
+            break
 
 def start(odrive):
-    odrive, bound_left, bound_right = bounds_detection_routine(
+    odrive = bounds_detection_routine(
             setup_velocity_control(
-                setup(odrives[0])))
+                setup(odrive)))
     setup_position_control(odrive)
-    return odrive, bound_left, bound_right
+    return odrive
 
-odrv0, bound0_left, bound0_right = start(odrives[0])
-
-move_in_procents(odrv0, 50, bound0_left, bound0_right)
+__all__ = ['odrive', 'start', 'move_in_procents']

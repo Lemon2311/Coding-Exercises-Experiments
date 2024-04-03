@@ -16,4 +16,4 @@ def ODrive_Move_Pos_To_X(X):
            break
 
 ODrive_Setup()
-ODrive_Move_Pos_To_X(50)
+ODrive_Move_Pos_To_X(21.3)
