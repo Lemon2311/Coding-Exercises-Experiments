@@ -9,12 +9,18 @@ def ODrive_Setup():
     print(f"nr:{odrv0.serial_number};V:{odrv0.vbus_voltage};Poz:{odrv0.axis0.pos_estimate}")
 
 ODrive_Setup()
-odrv0.axis0.controller.input_pos = 205
+#odrv0.axis0.controller.input_pos = 205
+print(odrv0.axis0.pos_estimate)
 
 while True:
-    odrv0.axis0.controller.input_pos +=0.05
+    odrv0.axis0.controller.input_pos +=1
     time.sleep(1)
-
+    print(odrv0.axis0.pos_estimate)
+    time.sleep(1)
+    odrv0.axis0.controller.input_pos -=1
+    time.sleep(1)
+    print(odrv0.axis0.pos_estimate)
+    time.sleep(1)
 
 #range_lower_baund = 52.45
 #range_upper_baund = 156.45

@@ -1,9 +1,10 @@
 import odrive
-from odrive.enums import AxisState
+from odrive.enums import AxisState, ControlMode
 
 odrv0 = odrive.find_any()
 
 odrv0.axis0.requested_state = AxisState.CLOSED_LOOP_CONTROL
+odrv0.axis0.controller.config.control_mode = ControlMode.POSITION_CONTROL
 odrv0.axis0.controller.input_pos = 0#-odrv0.axis0.pos_estimate
 
 #while True:
