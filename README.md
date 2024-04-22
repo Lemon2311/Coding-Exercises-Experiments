@@ -11,3 +11,6 @@ Examples using interesting native python features.<br>
 Async Multi Threaded WebServer built with FastAPI run using hypercorn to basically run the api on all machine threads in async fashion to be able to handle a lot of requests.<br>
 **5.) ODrive_Experiments**(actively working on)<br>
 Experiments I do while getting familiarized with the [ODrive](https://odriverobotics.com/) and it`s python tool.<br>
+
+**6.) PiPico_MicroPython**(actively working on)<br>
+MicroPython exercises I run on the Raspberry Pi Pico.<br>
