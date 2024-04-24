@@ -13,3 +13,5 @@ Async Multi Threaded WebServer built with FastAPI run using hypercorn to basical
 Experiments I do while getting familiarized with the [ODrive](https://odriverobotics.com/) and it`s python tool.<br>
 **6.) PiPico_MicroPython**(actively working on)<br>
 MicroPython exercises I ran on the Raspberry Pi Pico.<br>
+**7.) BunJsSimpleSQLiteInterface**(actively working on)<br>
+Experimenting with adding a simple abstraction layer to bun.js sqlite.<br>
