@@ -1,17 +1,7 @@
-import { createTable, getLastId, insert, select, update, remove } from "./main.js";
+import { createTable, getLastId, insert, select, update, remove, setupDB } from "./main.js";
 
-// createTable("users", "id INTEGER PRIMARY KEY, name TEXT");
+setupDB("mydb.sqlite", true);
 
-// let i = getLastId("users") || 0;
+insert("users", { name: "saluk yuzikuma"});
 
-// insert("users", ++i, "Alice");
-
-// console.log(select("users", "name", "Alice"));
-
-// update("users", 1, "name", "Bob");
-
-console.log(select("users", "name", "Bob"));
-
-remove("users", select("users", "name", "Bob")[0].id);
-
-console.log(select("users", "name", "Bob"));
+//update("users", "name", "Jane Doe", "name", "laba");

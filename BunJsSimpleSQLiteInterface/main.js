@@ -1,18 +1,50 @@
-import {Database} from "bun:sqlite";
+import { Database } from "bun:sqlite";
 
-const db = new Database("mydb.sqlite", {create: true});
+let db;
 
-export const insert = (table, id, name) => db.query(`INSERT INTO ${table} (id, name) VALUES (?, ?)`).run(id, name);
+let autoIncrement;
 
-export const createTable = (name, attributes) => db.query(`CREATE TABLE IF NOT EXISTS ${name} (${attributes})`).run();
-
-export const getLastId = (table) => {
-    const row = db.query(`SELECT MAX(id) as maxId FROM ${table}`).get();
-    return row.maxId;
+export const setupDB = (dbName, autoIncrementId = false) => {
+  db = new Database(dbName, { create: true });
+  autoIncrement = autoIncrementId;
 };
 
-export const remove = (table, id) => db.query(`DELETE FROM ${table} WHERE id = ?`).run(id);
+export const insert = (table, attributes, autoIncrementId = false) => {
+  autoIncrementId = Boolean(autoIncrementId); // Ensure autoIncrementId is a boolean
 
-export const select = (table, attribute, value) => db.query(`SELECT * FROM ${table} WHERE ${attribute} = ?`).all(value);
+  if (autoIncrementId || autoIncrement) {
+    const lastId = getLastId(table);
+    attributes.id = lastId ? lastId + 1 : 1; // If lastId exists, increment it. Otherwise, start at 1.
+  }
 
-export const update = (table, id, attribute, value) => db.query(`UPDATE ${table} SET ${attribute} = ? WHERE id = ?`).run(value, id);
+  const keys = Object.keys(attributes).join(", ");
+  const values = Object.values(attributes);
+  const placeholders = values.map(() => "?").join(", ");
+
+  db.query(`INSERT INTO ${table} (${keys}) VALUES (${placeholders})`).run(
+    ...values
+  );
+};
+
+export const createTable = (name, attributes) =>
+  db.query(`CREATE TABLE IF NOT EXISTS ${name} (${attributes})`).run();
+
+export const getLastId = (table) => {
+  const row = db.query(`SELECT MAX(id) as maxId FROM ${table}`).get();
+  return row.maxId;
+};
+
+export const remove = (table, attribute, value) =>
+  db.query(`DELETE FROM ${table} WHERE ${attribute} = ?`).run(value);
+
+export const select = (table, attribute, value) => {
+  const result = db
+    .query(`SELECT * FROM ${table} WHERE ${attribute} = ?`)
+    .all(value);
+  return result.length === 1 ? result[0] : result;
+};
+
+export const update = (table, searchAttribute, searchValue, attribute, value) =>
+  db
+    .query(`UPDATE ${table} SET ${attribute} = ? WHERE ${searchAttribute} = ?`)
+    .run(value, searchValue);
