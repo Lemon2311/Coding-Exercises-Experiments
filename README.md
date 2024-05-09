@@ -1,4 +1,4 @@
-# Cool Programming Exercises #
+# Coding Exercises & Experiments #
 Self-explicit, some of the coding exercises I complete, or experiments I make, some of my projects start here.
 
 **1.) Knife_Throw**<br>
